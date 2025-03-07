@@ -1,38 +1,15 @@
-# Mistral OCR
-Unofficial [RestEase](https://github.com/canton7/RestEase) C# Client for [Mistral OCR](https://api.mistral.ai/v1/ocr).
+﻿using System.ComponentModel.DataAnnotations;
 
-## NuGet
-[![NuGet Badge](https://img.shields.io/nuget/v/Mistral.OCR)](https://www.nuget.org/packages/Mistral.OCR) 
+namespace Mistral.OCR.Options;
 
-## Configuration
-
-You will need your ApiKey to use Mistral OCR, you can get one [https://console.mistral.ai/home](https://console.mistral.ai/home).
-
-Register the client using Dependency Injection:
-
-``` csharp
-services.AddMistralOCR(o =>
-    o.ApiKey = "[YOUR_API_KEY]"
-);
-```
-
-## Usage
-
-...
-``` csharp
-IMistralOCR client = // get from DI
-...
-```
-
-### Options
-``` csharp
+[PublicAPI]
 public class MistralOCROptions
 {
     /// <summary>
     /// The required BaseAddress.
     /// </summary>
     [Required]
-    public Uri BaseAddress { get; set; } = new("https://...");
+    public Uri BaseAddress { get; set; } = new("https://api.mistral.ai/v1/ocr");
 
     [Required]
     public string ApiKey { get; set; } = null!;
@@ -60,7 +37,3 @@ public class MistralOCROptions
     /// </summary>
     public HttpStatusCode[]? HttpStatusCodesToRetry { get; set; }
 }
-```
-
-## References
-- https://docs.mistral.ai/api/#tag/ocr
