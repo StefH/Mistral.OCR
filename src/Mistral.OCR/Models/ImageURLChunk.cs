@@ -14,11 +14,11 @@ public class ImageURLChunk
     [JsonProperty("type")]
     public string Type { get; set; } = "image_url";
 
-    public static ImageURLChunk FromBytes(byte[] bytes)
+    public static ImageURLChunk FromBytes(byte[] bytes, string mimeType = "image/png")
     {
-        return new ImageURLChunk()
+        return new ImageURLChunk
         {
-            ImageUrl = $"data:image/png;base64,{Convert.ToBase64String(bytes)}"
+            ImageUrl = $"data:{mimeType};base64,{Convert.ToBase64String(bytes)}"
         };
     }
 }

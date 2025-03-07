@@ -17,11 +17,23 @@ services.AddMistralOCR(o =>
 ```
 
 ## Usage
-
-...
 ``` csharp
 IMistralOCR client = // get from DI
-...
+
+var sourceImagePath = "path/to/image.png";
+
+var image = await File.ReadAllBytesAsync(sourceImagePath);
+
+var request = new OCRRequest
+{
+    Id = Guid.NewGuid().ToString(),
+    Document = ImageURLChunk.FromBytes(image)
+};
+
+var response = await client.ProcessAsync(request);
+var ocr = response.GetContent();
+
+var markdown = ocr.Pages[0].Markdown;
 ```
 
 ### Options
@@ -32,8 +44,11 @@ public class MistralOCROptions
     /// The required BaseAddress.
     /// </summary>
     [Required]
-    public Uri BaseAddress { get; set; } = new("https://...");
+    public Uri BaseAddress { get; set; } = new("https://api.mistral.ai/v1/ocr");
 
+    /// <summary>
+    /// The required ApiKey.
+    /// </summary>
     [Required]
     public string ApiKey { get; set; } = null!;
 

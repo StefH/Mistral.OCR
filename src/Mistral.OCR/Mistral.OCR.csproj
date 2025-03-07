@@ -14,7 +14,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/StefH/Mistral.OCR</RepositoryUrl>
-    <PackageTags>Mistral;Mistral AI;Mistral OCR;OCR;AI;client;rest;api;restease;</PackageTags>
+    <PackageTags>Mistral;AI;OCR;client;rest;api;restease;</PackageTags>
     <Description>This unofficial (RestEase based) client enables working with Mistral OCR (https://mistral.ai/fr/news/mistral-ocr)</Description>
     <PackageReadmeFile>PackageReadme.md</PackageReadmeFile>
   </PropertyGroup>
@@ -44,6 +44,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Stef.Validation.Options" Version="0.1.1" />
+    <PackageReference Include="Mime-Detective" Version="24.12.2" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'netstandard2.1'">

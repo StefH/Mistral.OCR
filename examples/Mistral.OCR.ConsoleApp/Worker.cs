@@ -10,8 +10,6 @@ namespace Mistral.OCR.ConsoleApp;
 
 internal class Worker(IMistralOCR client, ILogger<Worker> logger)
 {
-    private readonly ILogger<Worker> _logger = logger;
-
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
         try
@@ -25,7 +23,7 @@ internal class Worker(IMistralOCR client, ILogger<Worker> logger)
 
             foreach (var sourceImagePath in sourceImagePaths)
             {
-                _logger.LogInformation("Processing image {Image}", sourceImagePath);
+                logger.LogInformation("Processing image {Image}", sourceImagePath);
                 var image = await File.ReadAllBytesAsync(sourceImagePath, cancellationToken);
 
                 var request = new OCRRequest
