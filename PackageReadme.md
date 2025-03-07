@@ -1,10 +1,7 @@
-# Mistral OCR
+## Mistral OCR
 Unofficial [RestEase](https://github.com/canton7/RestEase) C# Client for [Mistral OCR](https://api.mistral.ai/v1/ocr).
 
-## NuGet
-[![NuGet Badge](https://img.shields.io/nuget/v/Mistral.OCR)](https://www.nuget.org/packages/Mistral.OCR) 
-
-## Configuration
+### Configuration
 
 You will need your ApiKey to use Mistral OCR, you can get one [https://console.mistral.ai/home](https://console.mistral.ai/home).
 
@@ -16,18 +13,17 @@ services.AddMistralOCR(o =>
 );
 ```
 
-## Usage
+### Usage
 ``` csharp
 IMistralOCR client = // get from DI
+IImageURLHelper imageURLHelper = // get from DI
 
-var sourceImagePath = "path/to/image.png";
-
-var image = await File.ReadAllBytesAsync(sourceImagePath);
+var sourceImagePath = @"c:\temp\image.png";
 
 var request = new OCRRequest
 {
     Id = Guid.NewGuid().ToString(),
-    Document = ImageURLChunk.FromBytes(image)
+    Document = await imageURLHelper.FromFileAsync(sourceImagePath)
 };
 
 var response = await client.ProcessAsync(request);
@@ -36,7 +32,7 @@ var ocr = response.GetContent();
 var markdown = ocr.Pages[0].Markdown;
 ```
 
-### Options
+#### Options
 ``` csharp
 public class MistralOCROptions
 {
@@ -77,5 +73,5 @@ public class MistralOCROptions
 }
 ```
 
-## References
+### References
 - https://docs.mistral.ai/api/#tag/ocr

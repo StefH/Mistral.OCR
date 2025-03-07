@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using MistralOCR;
 using MistralOCR.Models;
+using MistralOCR.Services;
 
 namespace Mistral.OCR.ConsoleApp;
 
-internal class Worker(IMistralOCR client, ILogger<Worker> logger)
+internal class Worker(IMistralOCR client, IImageURLHelper imageURLHelper, ILogger<Worker> logger)
 {
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
@@ -24,12 +25,11 @@ internal class Worker(IMistralOCR client, ILogger<Worker> logger)
             foreach (var sourceImagePath in sourceImagePaths)
             {
                 logger.LogInformation("Processing image {Image}", sourceImagePath);
-                var image = await File.ReadAllBytesAsync(sourceImagePath, cancellationToken);
 
                 var request = new OCRRequest
                 {
                     Id = Guid.NewGuid().ToString(),
-                    Document = ImageURLChunk.FromBytes(image)
+                    Document = await imageURLHelper.FromFileAsync(sourceImagePath, cancellationToken)
                 };
                 var response = await client.ProcessAsync(request, cancellationToken);
                 var ocr = response.GetContent();
@@ -38,7 +38,7 @@ internal class Worker(IMistralOCR client, ILogger<Worker> logger)
                 await writer.WriteLineAsync();
                 await writer.WriteLineAsync("---");
                 await writer.FlushAsync(cancellationToken);
-                
+
                 await Task.Delay(5000, cancellationToken);
             }
 

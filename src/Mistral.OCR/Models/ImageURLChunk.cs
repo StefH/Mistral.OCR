@@ -7,7 +7,6 @@ namespace MistralOCR.Models;
 /// </summary>
 public class ImageURLChunk
 {
-
     [JsonProperty("image_url")]
     public string ImageUrl { get; set; }
 

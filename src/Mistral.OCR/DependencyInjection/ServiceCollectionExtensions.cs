@@ -1,8 +1,10 @@
 ﻿using System.Net.Http.Headers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MimeDetective;
 using MistralOCR.Options;
 using MistralOCR.RetryPolicies;
+using MistralOCR.Services;
 using Newtonsoft.Json;
 using RestEase.HttpClientFactory;
 using Stef.Validation;
@@ -75,6 +77,9 @@ public static class ServiceCollectionExtensions
                     return Task.CompletedTask;
                 }
             });
+
+        services.AddSingleton(new ContentInspectorBuilder { Definitions = MimeDetective.Definitions.DefaultDefinitions.All() }.Build());
+        services.AddSingleton<IImageURLHelper, ImageURLHelper>();
 
         return services;
     }

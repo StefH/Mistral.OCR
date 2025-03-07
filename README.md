@@ -19,15 +19,14 @@ services.AddMistralOCR(o =>
 ## Usage
 ``` csharp
 IMistralOCR client = // get from DI
+IImageURLHelper imageURLHelper = // get from DI
 
-var sourceImagePath = "path/to/image.png";
-
-var image = await File.ReadAllBytesAsync(sourceImagePath);
+var sourceImagePath = @"c:\temp\image.png";
 
 var request = new OCRRequest
 {
     Id = Guid.NewGuid().ToString(),
-    Document = ImageURLChunk.FromBytes(image)
+    Document = await imageURLHelper.FromFile(sourceImagePath, cancellationToken)
 };
 
 var response = await client.ProcessAsync(request);
