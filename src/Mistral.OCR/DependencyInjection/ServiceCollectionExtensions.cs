@@ -1,14 +1,14 @@
 ﻿using System.Net.Http.Headers;
 using Microsoft.Extensions.Configuration;
-using Mistral.OCR;
-using Mistral.OCR.Options;
-using Mistral.OCR.RetryPolicies;
+using Microsoft.Extensions.DependencyInjection;
+using MistralOCR.Options;
+using MistralOCR.RetryPolicies;
 using Newtonsoft.Json;
 using RestEase.HttpClientFactory;
 using Stef.Validation;
 
 // ReSharper disable once CheckNamespace
-namespace Microsoft.Extensions.DependencyInjection;
+namespace MistralOCR.DependencyInjection;
 
 [PublicAPI]
 public static class ServiceCollectionExtensions
@@ -68,13 +68,15 @@ public static class ServiceCollectionExtensions
                 {
                     //client.ApiKey = options.ApiKey;
                 },
-                RequestModifier = async (request, ct) =>
+                RequestModifier = (request, _) =>
                 {
                     var auth = request.Headers.Authorization;
                     if (auth != null)
                     {
                         request.Headers.Authorization = new AuthenticationHeaderValue(auth.Scheme, options.ApiKey);
                     }
+
+                    return Task.CompletedTask;
                 }
             });
 

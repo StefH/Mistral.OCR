@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Mistral.OCR.Models;
+namespace MistralOCR.Models;
 
 /// <summary>
 /// Represents the dimensions of a PDF page's screenshot image.

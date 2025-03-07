@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Mistral.OCR.Models;
+namespace MistralOCR.Models;
 
 /// <summary>
 /// Represents a document URL chunk with a type, document URL, and an optional document name.

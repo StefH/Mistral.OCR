@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Mistral.OCR.Options;
+namespace MistralOCR.Options;
 
 [PublicAPI]
 public class MistralOCROptions
@@ -11,7 +11,7 @@ public class MistralOCROptions
     [Required]
     public Uri BaseAddress { get; set; } = new("https://api.mistral.ai/v1/ocr");
 
-    [Required]
+    [Required] 
     public string ApiKey { get; set; } = null!;
 
     /// <summary>

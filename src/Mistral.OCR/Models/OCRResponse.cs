@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Mistral.OCR.Models;
+namespace MistralOCR.Models;
 
 /// <summary>
 /// Represents an OCR response with pages, model, and usage information.

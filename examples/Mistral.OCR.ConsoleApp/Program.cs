@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MistralOCR.DependencyInjection;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 

@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Mistral.OCR.Models;
+namespace MistralOCR.Models;
 
 /// <summary>
 /// Represents an OCR request with various properties including model, id, document, pages, and image settings.
@@ -17,7 +17,7 @@ public class OCRRequest
     /// Document to run OCR on.
     /// </summary>
     [JsonProperty("document")]
-    public required object Document { get; set; }
+    public object Document { get; set; } = null!;
 
     /// <summary>
     /// Specific pages user wants to process in various formats: single number, range, or list of both. Starts from 0.

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Extensions.Http;
 
-namespace Mistral.OCR.RetryPolicies;
+namespace MistralOCR.RetryPolicies;
 
 internal static class HttpClientRetryPolicies
 {

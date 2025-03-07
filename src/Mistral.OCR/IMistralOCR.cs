@@ -1,7 +1,7 @@
-﻿using Mistral.OCR.Models;
+﻿using MistralOCR.Models;
 using RestEase;
 
-namespace Mistral.OCR;
+namespace MistralOCR;
 
 [Header("User-Agent", "stefh/MistralOCR")]
 [Header("Authorization", "Bearer")]
