@@ -64,10 +64,6 @@ public static class ServiceCollectionExtensions
             .AddPolicyHandler((serviceProvider, _) => HttpClientRetryPolicies.GetPolicy<IMistralOCR>(serviceProvider, options.MaxRetries, options.HttpStatusCodesToRetry))
             .UseWithRestEaseClient(new UseWithRestEaseClientOptions<IMistralOCR>
             {
-                InstanceConfigurer = client =>
-                {
-                    //client.ApiKey = options.ApiKey;
-                },
                 RequestModifier = (request, _) =>
                 {
                     var auth = request.Headers.Authorization;
