@@ -42,10 +42,7 @@ public class MistralOCROptions
     [Required]
     public Uri BaseAddress { get; set; } = new("https://api.mistral.ai/v1/ocr");
 
-    /// <summary>
-    /// The required ApiKey.
-    /// </summary>
-    [Required]
+    [Required] 
     public string ApiKey { get; set; } = null!;
 
     /// <summary>
@@ -55,16 +52,27 @@ public class MistralOCROptions
 
     /// <summary>
     /// This timeout in seconds defines the timeout on the HttpClient which is used to call the BaseAddress.
-    /// Default value is 60 seconds.
+    /// 
+    /// Default value is <c>60</c> seconds.
     /// </summary>
     [Range(1, int.MaxValue)]
     public int TimeoutInSeconds { get; set; } = 60;
 
     /// <summary>
     /// The maximum number of retries.
+    ///
+    /// Default value is <c>3</c>.
     /// </summary>
     [Range(0, 99)]
     public int MaxRetries { get; set; } = 3;
+
+    /// <summary>
+    /// Set the rate limit for your Completion API consumption.
+    ///
+    /// Default value is <c>1</c>.
+    /// </summary>
+    [Range(1, int.MaxValue)]
+    public int MaximumRequestsPerSecond { get; set; } = 1;
 
     /// <summary>
     /// In addition to Network failures, TaskCanceledException, HTTP 5XX and HTTP 408. Also retry these <see cref="HttpStatusCode"/>s. [Optional]

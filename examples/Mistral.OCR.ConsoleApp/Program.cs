@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -23,7 +24,7 @@ static class Program
 
         var worker = serviceProvider.GetRequiredService<Worker>();
 
-        await worker.RunAsync(CancellationToken.None);
+        await worker.ProcessImagesAsync(CancellationToken.None);
     }
 
     private static ServiceProvider RegisterServices(string[] args)
@@ -39,7 +40,10 @@ static class Program
 
         // services.AddMistralOCR(configuration);
 
-        services.AddMistralOCR(x => x.ApiKey = Environment.GetEnvironmentVariable("MISTRAL_API_KEY")!);
+        services.AddMistralOCR(mistralOCROptions =>
+        {
+            mistralOCROptions.ApiKey = Environment.GetEnvironmentVariable("MISTRAL_API_KEY")!;
+        });
 
         services.AddSingleton<Worker>();
 

@@ -11,7 +11,7 @@ namespace Mistral.OCR.ConsoleApp;
 
 internal class Worker(IMistralOCR client, IImageURLHelper imageURLHelper, ILogger<Worker> logger)
 {
-    public async Task RunAsync(CancellationToken cancellationToken = default)
+    public async Task ProcessImagesAsync(CancellationToken cancellationToken = default)
     {
         try
         {
@@ -39,7 +39,7 @@ internal class Worker(IMistralOCR client, IImageURLHelper imageURLHelper, ILogge
                 await writer.WriteLineAsync("---");
                 await writer.FlushAsync(cancellationToken);
 
-                await Task.Delay(5000, cancellationToken);
+                //await Task.Delay(5000, cancellationToken);
             }
 
         }

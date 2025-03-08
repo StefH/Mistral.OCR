@@ -3,13 +3,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MimeDetective;
 using MistralOCR.Options;
-using MistralOCR.RetryPolicies;
 using MistralOCR.Services;
 using Newtonsoft.Json;
 using RestEase.HttpClientFactory;
 using Stef.Validation;
 
-// ReSharper disable once CheckNamespace
 namespace MistralOCR.DependencyInjection;
 
 [PublicAPI]
@@ -63,7 +61,7 @@ public static class ServiceCollectionExtensions
                 httpClient.BaseAddress = options.BaseAddress;
                 httpClient.Timeout = TimeSpan.FromSeconds(options.TimeoutInSeconds);
             })
-            .AddPolicyHandler((serviceProvider, _) => HttpClientRetryPolicies.GetPolicy<IMistralOCR>(serviceProvider, options.MaxRetries, options.HttpStatusCodesToRetry))
+            .AddPolicyHandler((serviceProvider, _) => HttpClientPolicies.GetRateLimitAndRetryPolicies<IMistralOCR>(serviceProvider, options))
             .UseWithRestEaseClient(new UseWithRestEaseClientOptions<IMistralOCR>
             {
                 RequestModifier = (request, _) =>
