@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using MistralOCR.Options;
 using Polly;
 using Polly.Extensions.Http;
-using Polly.RateLimit;
 
 namespace MistralOCR.Services;
 
@@ -13,12 +12,18 @@ internal static class HttpClientPolicies
     {
         var logger = serviceProvider.GetRequiredService<ILogger<T>>();
 
+#if !NET8_0_OR_GREATER
+        logger.LogWarning("Rate limiting is only supported on .NET 8.0 or greater. Skipping rate limiting policy.");
+        return GetRetryPolicy(logger, options);
+#else
         var rateLimit = GetRateLimitPolicy(logger, options);
         var retry = GetRetryPolicy(logger, options);
 
         return Policy.WrapAsync(rateLimit, retry);
+#endif
     }
 
+#if NET8_0_OR_GREATER
     private static IAsyncPolicy<HttpResponseMessage> GetRateLimitPolicy<T>(ILogger<T> logger, MistralOCROptions options) where T : class
     {
         var requestsPerMinute = options.MaximumRequestsPerSecond * 60;
@@ -27,7 +32,7 @@ internal static class HttpClientPolicies
         return HttpPolicyExtensions
             .HandleTransientHttpError()
             .OrResult(httpResponseMessage => httpResponseMessage.StatusCode == HttpStatusCode.TooManyRequests)
-            .OrInner<RateLimitRejectedException>()
+            .OrInner<Polly.RateLimit.RateLimitRejectedException>()
             .WaitAndRetryForeverAsync((retryNum, _) =>
             {
                 logger.LogWarning("Request failed with '{reason}'. Retrying request. Retry attempt {retryCount}.", HttpStatusCode.TooManyRequests, retryNum);
@@ -35,6 +40,7 @@ internal static class HttpClientPolicies
             })
             .WrapAsync(Policy.RateLimitAsync(requestsPerMinute, minute));
     }
+#endif
 
     private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy<T>(ILogger<T> logger, MistralOCROptions options) where T : class
     {
