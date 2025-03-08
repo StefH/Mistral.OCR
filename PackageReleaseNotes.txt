@@ -1,0 +1,4 @@
+# 0.0.1 (08 March 2025)
+- #1 Add project [feature]
+
+The full release notes can be found here: https://github.com/StefH/Mistral.OCR/blob/main/ReleaseNotes.md
