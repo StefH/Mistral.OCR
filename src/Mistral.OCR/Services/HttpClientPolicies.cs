@@ -9,7 +9,7 @@ namespace MistralOCR.Services;
 
 internal static class HttpClientPolicies
 {
-    public static IAsyncPolicy<HttpResponseMessage> GetRateLimitAndRetryPolicies<T>(IServiceProvider serviceProvider, MistralOCROptions options) where T : class
+    internal static IAsyncPolicy<HttpResponseMessage> GetRateLimitAndRetryPolicies<T>(IServiceProvider serviceProvider, MistralOCROptions options) where T : class
     {
         var logger = serviceProvider.GetRequiredService<ILogger<T>>();
 

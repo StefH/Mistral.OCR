@@ -3,7 +3,7 @@ using RestEase;
 
 namespace MistralOCR;
 
-[Header("User-Agent", "stefh/MistralOCR")]
+[Header("User-Agent", "sheyenrath/MistralOCR")]
 [Header("Authorization", "Bearer")]
 public interface IMistralOCR
 {
