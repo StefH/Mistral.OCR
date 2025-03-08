@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +22,9 @@ static class Program
 
         var worker = serviceProvider.GetRequiredService<Worker>();
 
-        await worker.ProcessImagesAsync(CancellationToken.None);
+        await worker.ProcessPdfsAsync();
+
+        await worker.ProcessImagesAsync();
     }
 
     private static ServiceProvider RegisterServices(string[] args)
@@ -33,7 +33,7 @@ static class Program
         var services = new ServiceCollection();
 
         services.AddSingleton(configuration);
-        
+
         services.AddLogging(builder => builder.AddSerilog(logger: Log.Logger, dispose: true));
 
         // services.AddLogging(l => l.AddConsole());

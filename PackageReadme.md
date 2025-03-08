@@ -14,6 +14,7 @@ services.AddMistralOCR(o =>
 ```
 
 ### Usage
+#### Process Image
 ``` csharp
 IMistralOCR client = // get from DI
 IImageURLHelper imageURLHelper = // get from DI
@@ -23,13 +24,35 @@ var sourceImagePath = @"c:\temp\image.png";
 var request = new OCRRequest
 {
     Id = Guid.NewGuid().ToString(),
-    Document = await imageURLHelper.FromFileAsync(sourceImagePath)
+    Document = await imageURLHelper.FromFile(sourceImagePath, cancellationToken)
 };
 
 var response = await client.ProcessAsync(request);
 var ocr = response.GetContent();
 
 var markdown = ocr.Pages[0].Markdown;
+```
+
+#### Process Pdf
+``` csharp
+var pdfUrl = "https://pdfobject.com/pdf/sample.pdf";
+
+var request = new OCRRequest
+{
+    Id = Guid.NewGuid().ToString(),
+    Document = new DocumentURLChunk
+    {
+        DocumentName = pdfUrl.Split('/').Last(),
+        DocumentUrl = pdfUrl
+    }
+};
+var response = await client.ProcessAsync(request);
+var ocr = response.GetContent();
+
+foreach (var page in ocr.Pages)
+{
+    Consolle.WriteLineAsync(page.Markdown);
+}
 ```
 
 #### Options

@@ -15,6 +15,8 @@ public class DocumentURLChunk
 
     /// <summary>
     /// The filename of the document.
+    /// 
+    /// [Optional]
     /// </summary>
     [JsonProperty("document_name")]
     public string? DocumentName { get; set; }
