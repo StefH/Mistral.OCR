@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <PackageId>Mistral.OCR</PackageId>
     <RootNamespace>MistralOCR</RootNamespace>
     <TargetFrameworks>netstandard2.1;net6.0;net8.0</TargetFrameworks>
@@ -43,8 +43,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Stef.Validation.Options" Version="0.1.1" />
-    <PackageReference Include="Mime-Detective" Version="24.12.2" />
+    <PackageReference Include="Stef.Validation.Options" Version="0.2.0" />
+    <PackageReference Include="Mime-Detective" Version="25.4.25" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'netstandard2.1'">
